@@ -1,0 +1,2 @@
+com/lida/entity/DemoEntity.java
+ com.lida.entity.DemoEntity

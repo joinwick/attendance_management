@@ -1,0 +1,4 @@
+rootProject.name = 'attendance_management'
+include 'web'
+include 'core'
+

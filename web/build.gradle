@@ -1,0 +1,19 @@
+apply plugin: 'application'
+apply plugin: 'org.springframework.boot'
+mainClassName = "com.lida.web.StartServer"
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter")
+            {
+                exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+            }
+    compile("org.springframework.boot:spring-boot-starter-web")
+            {
+                exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+            }
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+            {
+                exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+            }
+    compile project(":core")
+}
