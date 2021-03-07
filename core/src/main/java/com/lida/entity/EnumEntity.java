@@ -15,11 +15,11 @@ public class EnumEntity {
      */
     public enum UserType implements EnumInterface {
         // admin
-        ADMIN("admin", "系统管理员"),
+        ADMIN("1", "系统管理员"),
         // attendance clerk
-        ATTENDANCE_CLERK("attendance_clerk", "考勤员"),
+        ATTENDANCE_CLERK("2", "考勤员"),
         // assistant
-        ASSISTANT("assistant", "辅导员");
+        ASSISTANT("3", "辅导员");
 
 
         String value;
@@ -55,11 +55,11 @@ public class EnumEntity {
      */
     public enum UserStatus implements EnumInterface {
         // active
-        REGISTER("register", "已注册"),
+        REGISTER("1", "已注册"),
         // active
-        ACTIVE("active", "已激活"),
+        ACTIVE("2", "已激活"),
         // withdraw
-        WITHDRAW("withdraw", "已注销");
+        WITHDRAW("3", "已注销");
 
         String value;
         String label;

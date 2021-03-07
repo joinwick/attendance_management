@@ -1,6 +1,5 @@
 package com.lida.web.controller;
 
-import com.lida.entity.CommunicationEntity;
 import com.lida.entity.EnumEntity;
 import com.lida.entity.UserManagementEntity;
 import org.slf4j.Logger;
@@ -25,14 +24,12 @@ public class DemoController {
     public UserManagementEntity test() {
         LOGGER.info("用户访问 test api");
         UserManagementEntity userManagementEntity = new UserManagementEntity();
-        userManagementEntity.setUserID("10001");
+        userManagementEntity.setUserId("10000001");
         userManagementEntity.setUserName("join");
         userManagementEntity.setUserType(EnumEntity.UserType.ADMIN.getValue());
         userManagementEntity.setUserStatus(EnumEntity.UserStatus.REGISTER.getValue());
-        CommunicationEntity communicationEntity = new CommunicationEntity();
-        communicationEntity.setAddress("pudong new area");
-        communicationEntity.setTelePhone("+86 021 66666666");
-        userManagementEntity.setCommunicationEntity(communicationEntity);
+        userManagementEntity.setAddress("pudong new area");
+        userManagementEntity.setTelePhone("+86 021 66666666");
         return userManagementEntity;
     }
 }

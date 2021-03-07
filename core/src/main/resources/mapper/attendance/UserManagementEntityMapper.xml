@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lida.mybatis.mapper.attendance.UserManagementEntityMapper">
+    <resultMap id="BaseResultMap" type="com.lida.entity.UserManagementEntity">
+        <id column="USERID" jdbcType="CHAR" property="userId"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="userName"/>
+        <result column="USERTYPE" jdbcType="CHAR" property="userType"/>
+        <result column="PASSWORD" jdbcType="VARCHAR" property="password"/>
+        <result column="USERSTATUS" jdbcType="CHAR" property="userStatus"/>
+        <result column="ADDRESS" jdbcType="VARCHAR" property="address"/>
+        <result column="ZIPCODE" jdbcType="DECIMAL" property="zipCode"/>
+        <result column="TELEPHONE" jdbcType="VARCHAR" property="telePhone"/>
+        <result column="EMAIL" jdbcType="VARCHAR" property="email"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        USERID, USERNAME, USERTYPE, PASSWORD, USERSTATUS, ADDRESS, ZIPCODE, TELEPHONE, EMAIL
+    </sql>
+
+    <insert id="insert" parameterType="com.lida.entity.UserManagementEntity">
+        insert into T_USERMANAGEMENT (USERID, USERNAME, USERTYPE, PASSWORD, USERSTATUS, ADDRESS, ZIPCODE, TELEPHONE, EMAIL)
+        values (#{userId,jdbcType=CHAR}, #{userName,jdbcType=VARCHAR}, #{userType,jdbcType=CHAR},
+        #{password,jdbcType=VARCHAR}, #{userStatus,jdbcType=CHAR}, #{address,jdbcType=VARCHAR},
+        #{zipCode,jdbcType=DECIMAL},
+        #{telePhone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="selectByUserType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from T_USERMANAGEMENT t
+        where t.USERTYPE = #{userType,jdbcType=CHAR} order by t.USERID
+    </select>
+
+    <delete id="deleteByUserId" parameterType="string">
+        delete from T_USERMANAGEMENT where USERID = #{userId,jdbcType=CHAR}
+    </delete>
+
+</mapper>

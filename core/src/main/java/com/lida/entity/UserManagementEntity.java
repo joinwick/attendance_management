@@ -8,19 +8,22 @@ package com.lida.entity;
  * @since 1.0.0
  */
 public class UserManagementEntity {
-    private String userID;
+    private String userId;
     private String userName;
     private String userType;
     private String password;
     private String userStatus;
-    private CommunicationEntity communicationEntity;
+    private String address;
+    private int zipCode;
+    private String telePhone;
+    private String email;
 
-    public String getUserID() {
-        return userID;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUserName() {
@@ -55,23 +58,50 @@ public class UserManagementEntity {
         this.userStatus = userStatus;
     }
 
-    public CommunicationEntity getCommunicationEntity() {
-        return communicationEntity;
+    public String getAddress() {
+        return address;
     }
 
-    public void setCommunicationEntity(CommunicationEntity communicationEntity) {
-        this.communicationEntity = communicationEntity;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public int getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(int zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getTelePhone() {
+        return telePhone;
+    }
+
+    public void setTelePhone(String telePhone) {
+        this.telePhone = telePhone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
     public String toString() {
         return "UserManagementEntity{" +
-                "userID='" + userID + '\'' +
+                "userId='" + userId + '\'' +
                 ", userName='" + userName + '\'' +
                 ", userType='" + userType + '\'' +
                 ", password='" + password + '\'' +
                 ", userStatus='" + userStatus + '\'' +
-                ", communicationEntity=" + communicationEntity +
+                ", address='" + address + '\'' +
+                ", zipCode=" + zipCode +
+                ", telePhone='" + telePhone + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }
