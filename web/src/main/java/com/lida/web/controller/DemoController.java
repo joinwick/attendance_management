@@ -1,6 +1,8 @@
 package com.lida.web.controller;
 
-import com.lida.entity.DemoEntity;
+import com.lida.entity.CommunicationEntity;
+import com.lida.entity.EnumEntity;
+import com.lida.entity.UserManagementEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -20,11 +22,17 @@ public class DemoController {
 
     @RequestMapping("/test")
     @ResponseBody
-    public DemoEntity test() {
+    public UserManagementEntity test() {
         LOGGER.info("用户访问 test api");
-        DemoEntity demoEntity = new DemoEntity();
-        demoEntity.setName("小强");
-        demoEntity.setAge(24);
-        return demoEntity;
+        UserManagementEntity userManagementEntity = new UserManagementEntity();
+        userManagementEntity.setUserID("10001");
+        userManagementEntity.setUserName("join");
+        userManagementEntity.setUserType(EnumEntity.UserType.ADMIN.getValue());
+        userManagementEntity.setUserStatus(EnumEntity.UserStatus.REGISTER.getValue());
+        CommunicationEntity communicationEntity = new CommunicationEntity();
+        communicationEntity.setAddress("pudong new area");
+        communicationEntity.setTelePhone("+86 021 66666666");
+        userManagementEntity.setCommunicationEntity(communicationEntity);
+        return userManagementEntity;
     }
 }
