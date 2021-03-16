@@ -1,25 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="INFO" monitorInterval="30">
+<!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+<Configuration status="DEBUG" monitorInterval="30">
     <properties>
         <!--设置容器日志在硬盘上输出的目录-->
         <property name="logPath">/logs/</property>
         <!--设置项目日志在硬盘上输出的目录-->
-        <property name="logPathForProject">/logs/gc/</property>
+        <property name="logPathForProject">/logs/vision/</property>
     </properties>
 
     <Appenders>
-        <!--=====容器日志配置=====-->
-        <!--设置在控制台打印日志-->
+        <!--console: 控制台输出的配置-->
         <Console name="Console" target="SYSTEM_OUT">
             <!--设置输出格式-->
             <PatternLayout charset="UTF-8" pattern="[%-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n" />
+            <!--设置过滤器等级为DEBUG-->
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
         </Console>
 
+        <!--File: 同步输出日志到本地文件-->
+        <File name="fileLog" fileName="${logPath}/file.log" filepattern="${logPath}/%d{YYYY-MM-dd}-%i-file.log.zip">
+            <PatternLayout charset="UTF-8" pattern="[%-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n"/>
+        </File>
+
+        <!--设置级别为DEBUG日志输出到debug.log中-->
+        <RollingFile name="debugLog" filename="${logPath}/debug.log" filepattern="${logPath}/%d{YYYY-MM-dd}-%i-debug.log.zip">
+            <Filters>
+                <!--设置只输出级别为DEBUG的日志-->
+                <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout charset="UTF-8" pattern="[ %-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="50MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20" />
+        </RollingFile>
+
         <!--设置级别为INFO日志输出到info.log中,filename为输出日志的目录,filepattern 为压缩文件的命名规范与目录 -->
-        <RollingFile name="INFO" filename="${logPath}/info.log" filepattern="${logPath}/%d{YYYY-MM-dd}-%i-info.log.zip">
+        <RollingFile name="infoLog" filename="${logPath}/info.log" filepattern="${logPath}/%d{YYYY-MM-dd}-%i-info.log.zip">
             <!--设置日志级别-->
             <Filters>
-                <ThresholdFilter level="INFO"/>
+                <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
             <!--输出日志的格式-->
             <PatternLayout charset="UTF-8" pattern="[ %-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n" />
@@ -34,11 +55,10 @@
         </RollingFile>
 
         <!--设置级别为WARN日志输出到warn.log中-->
-        <RollingFile name="WARN" filename="${logPath}/warn.log" filepattern="${logPath}/%d{YYYY-MM-dd}-%i-warn.log.zip">
+        <RollingFile name="warnLog" filename="${logPath}/warn.log" filepattern="${logPath}/%d{YYYY-MM-dd}-%i-warn.log.zip">
             <Filters>
-                <!--设置只输出级别为WARN的日志-->
-                <ThresholdFilter level="WARN"/>
-                <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <!--设置只输出级别为WARN的日志, 级别在warn之上则接受,onMismatch="DENY" :级别在warn之下则拒绝-->
+                <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
             <PatternLayout charset="UTF-8" pattern="[ %-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n" />
             <Policies>
@@ -49,49 +69,9 @@
         </RollingFile>
 
         <!--设置级别为ERROR日志输出到error.log中-->
-        <RollingFile name="ERROR" filename="${logPath}/error.log" filepattern="${logPath}/%d{YYYY-MM-dd}-%i-error.log.zip">
+        <RollingFile name="errorLog" filename="${logPath}/error.log" filepattern="${logPath}/%d{YYYY-MM-dd}-%i-error.log.zip">
             <!--设置只输出级别为ERROR的日志-->
-            <ThresholdFilter level="ERROR"/>
-            <PatternLayout charset="UTF-8" pattern="[ %-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n" />
-            <Policies>
-                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
-                <SizeBasedTriggeringPolicy size="50MB" />
-            </Policies>
-            <DefaultRolloverStrategy max="20" />
-        </RollingFile>
-
-        <!--=====项目日志配置=====-->
-        <Console name="ConsolePro" target="SYSTEM_OUT">
-            <PatternLayout charset="UTF-8" pattern="[%-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n" />
-        </Console>
-
-        <RollingFile name="INFOPro" filename="${logPathForProject}/info.log" filepattern="${logPathForProject}/%d{YYYY-MM-dd}-%i-info.log.zip">
-            <Filters>
-                <ThresholdFilter level="INFO"/>
-            </Filters>
-            <PatternLayout charset="UTF-8" pattern="[ %-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n" />
-            <Policies>
-                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
-                <SizeBasedTriggeringPolicy size="50MB" />
-            </Policies>
-            <DefaultRolloverStrategy max="20" />
-        </RollingFile>
-
-        <RollingFile name="WARNPro" filename="${logPathForProject}/warn.log" filepattern="${logPathForProject}/%d{YYYY-MM-dd}-%i-warn.log.zip">
-            <Filters>
-                <ThresholdFilter level="WARN"/>
-                <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
-            </Filters>
-            <PatternLayout charset="UTF-8" pattern="[ %-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n" />
-            <Policies>
-                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
-                <SizeBasedTriggeringPolicy size="50MB" />
-            </Policies>
-            <DefaultRolloverStrategy max="20" />
-        </RollingFile>
-
-        <RollingFile name="ERRORPro" filename="${logPathForProject}/error.log" filepattern="${logPathForProject}/%d{YYYY-MM-dd}-%i-error.log.zip">
-            <ThresholdFilter level="ERROR"/>
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout charset="UTF-8" pattern="[ %-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n" />
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
@@ -102,23 +82,22 @@
     </Appenders>
 
     <Loggers>
-        <!--
-            添加项目日志
-            配置项目日志只输出com.gc下面的日志
-            additivity="false" 表示只将该日志输出到该配置的路径下面，并不会再重复输出到root也就是容器日志中
-        -->
-        <logger name="com.gc" level="debug" additivity="false">
-            <appender-ref ref = "ConsolePro"/>
-            <appender-ref ref = "INFOPro"/>
-            <appender-ref ref = "WARNPro" />
-            <appender-ref ref = "ERRORPro" />
-        </logger>
-        <!--添加容器日志-->
-        <root level="INFO">
+        <!--过滤掉spring和mybatis的一些无用的DEBUG信息-->
+        <!--Logger节点用来单独指定日志的形式，name为包路径,比如要为org.springframework包下所有日志指定为INFO级别等-->
+        <logger name="org.springframework" level="INFO"/>
+        <logger name="org.mybatis" level="INFO"/>
+        <!-- Root节点用来指定项目的根日志，如果没有单独指定Logger，那么就会默认使用该Root日志输出 -->
+        <root level="trace">
             <appender-ref ref = "Console"/>
-            <appender-ref ref = "INFO" />
-            <appender-ref ref = "WARN" />
-            <appender-ref ref = "ERROR" />
+            <appender-ref ref = "debugLog" />
+            <appender-ref ref = "infoLog" />
+            <appender-ref ref = "warnLog" />
+            <appender-ref ref = "errorLog" />
         </root>
+        <!--AsyncLogger :异步日志,LOG4J有三种日志模式,全异步日志,混合模式,同步日志,性能从高到底,线程越多效率越高,也可以避免日志卡死线程情况发生-->
+        <!--additivity="false" : additivity设置事件是否在root logger输出，为了避免重复输出，可以在Logger 标签下设置additivity为”false”-->
+        <AsyncLogger name="AsyncLogger" level="trace" includeLocation="true" additivity="false">
+            <appender-ref ref="errorLog"/>
+        </AsyncLogger>
     </Loggers>
 </Configuration>

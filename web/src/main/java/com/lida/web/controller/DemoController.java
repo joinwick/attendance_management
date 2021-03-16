@@ -4,9 +4,8 @@ import com.lida.entity.EnumEntity;
 import com.lida.entity.UserManagementEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author join wick
@@ -15,12 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @createDate 2021/3/6 23:13
  * @since 1.0.0
  */
-@Controller
+@RestController
 public class DemoController {
     private static final Logger LOGGER = LoggerFactory.getLogger(DemoController.class);
 
     @RequestMapping("/test")
-    @ResponseBody
     public UserManagementEntity test() {
         LOGGER.info("用户访问 test api");
         UserManagementEntity userManagementEntity = new UserManagementEntity();
